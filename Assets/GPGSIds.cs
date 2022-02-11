@@ -24,12 +24,12 @@
 
 public static class GPGSIds
 {
-        public const string achievement_drivingmachine = "CgkIxeXi2bwYEAIQBw"; // <GPGSID>
-        public const string achievement_beginner = "CgkIxeXi2bwYEAIQAw"; // <GPGSID>
-        public const string achievement_crazydriver = "CgkIxeXi2bwYEAIQBg"; // <GPGSID>
-        public const string leaderboard_dodge__classic_retro_game_dodge_the_bullets = "CgkIxeXi2bwYEAIQAQ"; // <GPGSID>
-        public const string achievement_gooddriver = "CgkIxeXi2bwYEAIQBA"; // <GPGSID>
-        public const string achievement_bestdriver = "CgkIxeXi2bwYEAIQBQ"; // <GPGSID>
+        public const string achievement_drivingmachine = "Cxxxxxxxxxxxxxx"; // <GPGSID>
+        public const string achievement_beginner = "Cxxxxxxxxxxxxxx"; // <GPGSID>
+        public const string achievement_crazydriver = "Cxxxxxxxxxxxxxx"; // <GPGSID>
+        public const string leaderboard_dodge__classic_retro_game_dodge_the_bullets = "Cxxxxxxxxxxxxxx"; // <GPGSID>
+        public const string achievement_gooddriver = "Cxxxxxxxxxxxxxx"; // <GPGSID>
+        public const string achievement_bestdriver = "Cxxxxxxxxxxxxxx"; // <GPGSID>
 
 }
 
