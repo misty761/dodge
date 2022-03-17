@@ -1,5 +1,5 @@
-lastUpgrade=01011
-proj.pluginVersion=0.10.11
+lastUpgrade=01014
+proj.pluginVersion=0.10.14
 proj.AppId=840928113349
 and.BundleId=com.mobelista.dodge
 proj.classDir=Assets

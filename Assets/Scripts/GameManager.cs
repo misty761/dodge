@@ -21,6 +21,11 @@ public class GameManager : MonoBehaviour
 
     float timeAfterGameOver;
 
+    public GameObject buttonStart;
+
+    bool isAdLoadFail;
+    bool isAdClosed;
+
     private void Awake()
     {
         PlayGamesPlatform.InitializeInstance(new PlayGamesClientConfiguration.Builder().Build());
@@ -34,12 +39,17 @@ public class GameManager : MonoBehaviour
         surviveTime = 0;
         isGameover = false;
         timeAfterGameOver = 0f;
+        isAdLoadFail = false;
+        isAdClosed = false;
         
         // Initialize the Google Mobile Ads SDK.
         MobileAds.Initialize(initStatus => { });
         RequestInterstitial();
 
         LogInPlayGames();
+
+        // stop at start game
+        Time.timeScale = 0f;
     }
 
     // Update is called once per frame
@@ -59,9 +69,9 @@ public class GameManager : MonoBehaviour
             if (timeAfterGameOver > 2.5f)
             {
                 // AdMob 광고 보기
-                if (this.interstitial.IsLoaded())
+                if (interstitial.IsLoaded())
                 {
-                    this.interstitial.Show();
+                    interstitial.Show();
                 }
 
                 // 최고 기록 불러오기
@@ -78,19 +88,28 @@ public class GameManager : MonoBehaviour
                 // 최고 기록 표시
                 recordText.text = "Best time : " + (int)bestTime;
 
-                // 게임 오버 표시
-                gameoverText.SetActive(true);
-
                 // 키보드 R 눌르면 새 게임 시작
                 if (Input.GetKeyDown(KeyCode.R))
                 {
                     SceneManager.LoadScene("SampleScene");
                 }
 
+                // show restart button
+                if (isAdLoadFail || isAdClosed)
+                {
+                    gameoverText.SetActive(true);
+                }
+
             }
 
             
         }  
+    }
+
+    public void StartGame()
+    {
+        Time.timeScale = 1f;
+        Destroy(buttonStart);
     }
 
     public void LogInPlayGames()
@@ -197,9 +216,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        isGameover = true;
-
-        
+        isGameover = true; 
     }
 
     private void RequestInterstitial()
@@ -208,9 +225,9 @@ public class GameManager : MonoBehaviour
             string adUnitId = "ca-app-pub-3940256099942544/1033173712";
         #elif UNITY_IPHONE
             string adUnitId = "ca-app-pub-3940256099942544/4411468910";
-        #else
+#else
             string adUnitId = "unexpected_platform";
-        #endif
+#endif
 
         // Initialize an InterstitialAd.
         this.interstitial = new InterstitialAd(adUnitId);
@@ -224,7 +241,7 @@ public class GameManager : MonoBehaviour
         // Called when the ad is closed.
         this.interstitial.OnAdClosed += HandleOnAdClosed;
         // Called when the ad click caused the user to leave the application.
-        this.interstitial.OnAdLeavingApplication += HandleOnAdLeavingApplication;
+        //this.interstitial.OnAdLeavingApplication += HandleOnAdLeavingApplication;
 
         // Create an empty ad request.
         AdRequest request = new AdRequest.Builder().Build();
@@ -239,8 +256,9 @@ public class GameManager : MonoBehaviour
 
     public void HandleOnAdFailedToLoad(object sender, AdFailedToLoadEventArgs args)
     {
-        MonoBehaviour.print("HandleFailedToReceiveAd event received with message: " + args.Message);
+        MonoBehaviour.print("HandleFailedToReceiveAd event received with message: ");
         interstitial.Destroy();
+        isAdLoadFail = true;      
     }
 
     public void HandleOnAdOpened(object sender, EventArgs args)
@@ -253,6 +271,7 @@ public class GameManager : MonoBehaviour
     {
         MonoBehaviour.print("HandleAdClosed event received");
         interstitial.Destroy();
+        isAdClosed = true;   
     }
 
     public void HandleOnAdLeavingApplication(object sender, EventArgs args)

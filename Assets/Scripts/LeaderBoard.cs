@@ -11,7 +11,7 @@ public class LeaderBoard : MonoBehaviour
     public AudioClip audioClick;
 
     AudioSource audioButton;
-    string LEADER_BOARD_ID = "CgkIxeXi2bwYEAIQAQ";
+    string LEADER_BOARD_ID = "Cxxxxxxxxxxxxxxxxxxx";
     // Start is called before the first frame update
     void Start()
     {
